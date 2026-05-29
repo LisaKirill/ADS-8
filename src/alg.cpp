@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <utility>
 #include "bst.h"
 
 void makeTree(BST<std::string>& tree, const char* filename) {
@@ -14,8 +15,11 @@ void makeTree(BST<std::string>& tree, const char* filename) {
   }
 
   std::string word = "";
-  while (!file.eof()) {
+  while (true) {
     int ch = file.get();
+    if (ch == EOF) {
+      break;
+    }
 
     if (ch >= 'a' && ch <= 'z') {
       word += static_cast<char>(ch);
