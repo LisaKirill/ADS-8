@@ -22,12 +22,7 @@ int main() {
   BST<std::string> tree;
   const char* filename = "src/war_peace.txt";
 
-  std::cout << "Building tree..." << std::endl;
   makeTree(tree, filename);
-
-  std::cout << "Tree depth: " << tree.depth() << std::endl;
-
-  std::cout << "Saving frequencies..." << std::endl;
   printFreq(tree);
 
   return 0;
