@@ -3,6 +3,7 @@
 #define INCLUDE_BST_H_
 
 #include <algorithm>
+#include <string>
 #include <vector>
 #include <utility>
 
@@ -34,7 +35,7 @@ class BST {
     }
     if (val < node->value) {
       node->left = insertNode(node->left, val);
-    } else if (val > node->value) {
+    } else if (node->value < val) {
       node->right = insertNode(node->right, val);
     } else {
       node->count++;
@@ -51,17 +52,17 @@ class BST {
     return 1 + std::max(leftDepth, rightDepth);
   }
 
-  bool searchNode(Node* node, const T& val) const {
+  int searchNode(Node* node, const T& val) const {
     if (node == nullptr) {
-      return false;
-    }
-    if (val == node->value) {
-      return true;
+      return 0;
     }
     if (val < node->value) {
       return searchNode(node->left, val);
+    } else if (node->value < val) {
+      return searchNode(node->right, val);
+    } else {
+      return node->count;
     }
-    return searchNode(node->right, val);
   }
 
   void inorderTraverse(Node* node, std::vector<std::pair<int, T>>& vec) const {
@@ -84,10 +85,13 @@ class BST {
   }
 
   int depth() const {
-    return calcDepth(root);
+    if (root == nullptr) {
+      return 0;
+    }
+    return calcDepth(root) - 1;
   }
 
-  bool search(const T& value) const {
+  int search(const T& value) const {
     return searchNode(root, value);
   }
 
